@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "manager-drink", "manager-drink.csproj", "{B34C8E27-7F82-4399-BAFF-F4F70C5A4247}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B34C8E27-7F82-4399-BAFF-F4F70C5A4247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34C8E27-7F82-4399-BAFF-F4F70C5A4247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34C8E27-7F82-4399-BAFF-F4F70C5A4247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34C8E27-7F82-4399-BAFF-F4F70C5A4247}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CBD6480-4362-4752-BA9A-6F566AD5D534}
+	EndGlobalSection
+EndGlobal

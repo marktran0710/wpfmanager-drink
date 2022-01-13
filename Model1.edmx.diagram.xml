@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="840203738dd849e9aa53503fc85f986b" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="DBBEVERAGEModel.Beverage" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.Order" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.Order_Detail" Width="1.5" PointX="7.5" PointY="1.25" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.Role" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.StudentDetail" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.sysdiagram" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.TypeOfBeverage" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="DBBEVERAGEModel.User" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__Beverage__Typeof__7D439ABD" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__Order_Det__Bever__7F2BE32F" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__Order__User_id__7E37BEF6" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__Order_Det__Order__00200768" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__User__Role_id__01142BA1" />
+        <AssociationConnector Association="DBBEVERAGEModel.FK__User__Role_id__5CD6CB2B" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

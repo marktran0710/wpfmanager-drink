@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="996f1b59791642f3ba6b51c9154553ca" Name="Diagram1">
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.Beverage" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.Order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.Order_Detail" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.Role" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.Status" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.TypeOfBeverage" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MANAGER_DRINKModel.User" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_BEVERAGE_TYPEOF" ManuallyRouted="false" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_ORDERDETAIL_BEVERAGE" ManuallyRouted="false" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_ORDER_ORDERSTATUS" ManuallyRouted="false" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_ORDER_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_ORDERDETAIL_ORDER" ManuallyRouted="false" />
+        <AssociationConnector Association="MANAGER_DRINKModel.FK_USER_ROLE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

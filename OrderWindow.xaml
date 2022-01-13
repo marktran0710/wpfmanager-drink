@@ -1,0 +1,131 @@
+﻿<Window x:Class="manager_drink.OrderWindow"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:manager_drink"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:manager_drink.UserControlX"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="LightCyan"
+     FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        x:Name="window"
+                DataContext="{StaticResource OrderVM}"
+
+        Title="ORDER" Height="500" Width="1000">
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#8fa6cb" Offset="0.0"/>
+                <GradientStop Color="#7d84b2" Offset="0.5"/>
+                <GradientStop Color="#D5F9DE" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <uc:ControlBarUC Tag="{Binding Title, ElementName=window}"></uc:ControlBarUC>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--các element binding từ selected item-->
+                <materialDesign:Card Grid.Row="0" Margin="5">
+                    <WrapPanel Margin="0 0 0 10">
+                        <!--<TextBox Text="{Binding Id_order, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="ID_order" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
+                        <TextBox Text="{Binding Name_customer, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Customer_name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding Phone_number, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Phone_number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <!--<TextBox Text="{Binding Customer_balance, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Customer_balance" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
+                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="180"/>
+                        <!--<DatePicker VerticalAlignment="Center" SelectedDate="{Binding Order_date, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5 -7 15 -7" materialDesign:HintAssist.Hint="Order_date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />-->
+                        <ComboBox Margin="5 5 15 5" DisplayMemberPath="Name_status" ItemsSource="{Binding Status}" SelectedItem="{Binding SelectedStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Order_status" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+
+                        </ComboBox>
+                        <!--<TextBox Text="{Binding User_id, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="User_id" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
+                        <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Address" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Label x:Name="lbl_error" Content="Something content is not true format !!!"  Visibility="{Binding IsVisible}" FontWeight="Bold" Margin="10 15 15 5">
+                            <Label.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="Red" />
+                                </LinearGradientBrush>
+                            </Label.Foreground>
+                        </Label>
+                        
+                        <!--<TextBox Text="{Binding Total_money, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" materialDesign:HintAssist.Hint="Total_money" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />-->
+                    </WrapPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="1" Margin="5">
+                    <WrapPanel>
+                        <Button Command="{Binding AddCommand}" Content="Add" Margin="5" Width="100"></Button>
+                        <Button Command="{Binding EditCommand}" Content="Edit" Margin="5" Width="100"></Button>
+                        <Button Command="{Binding DeleteCommand}" Content="Delete" Margin="5" Width="100"></Button>
+                        <Button Command="{Binding SearchCommand}" Content="Search" Margin="5" Width="150"></Button>
+                        <TextBox Text="{Binding SelectedContentSearch, UpdateSourceTrigger=PropertyChanged}" Margin="5" Width="150" materialDesign:HintAssist.Hint="Search name customer"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"></TextBox>
+                        <Button Command="{Binding FilterAscendCommand}"  Margin="5" Width="50">
+                            <materialDesign:PackIcon Kind="SortBoolAscending" />
+                        </Button>
+                        <Button Command="{Binding FilterDescendCommand}"  Margin="5" Width="50">
+                            <materialDesign:PackIcon Kind="SortBoolDescending" />
+                        </Button>
+                    </WrapPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch" Width="1000">
+                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto">-->
+                    <ListView Margin="20"  Background="Red" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}"
+                                  ScrollViewer.CanContentScroll="True" 
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <!--<ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>-->
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment"  Value="Center"  />
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id_order}" Width="50" >
+                                </GridViewColumn>
+                                <GridViewColumn Header="Customer"  DisplayMemberBinding="{Binding Name_customer}" Width="150">
+                                </GridViewColumn>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="200"></GridViewColumn>
+                                <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="150"></GridViewColumn>
+                                <!--<GridViewColumn Header="User ID" DisplayMemberBinding="{Binding User_id}" Width="50" ></GridViewColumn>-->
+                                <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding Phone_number}" Width="100"></GridViewColumn>
+                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Order_status}" Width="50"  ></GridViewColumn>
+                                <GridViewColumn Header="Created at" DisplayMemberBinding="{Binding Order_date}" Width="150" ></GridViewColumn>
+                                <GridViewColumn Header="Total money" DisplayMemberBinding="{Binding Total_money}" Width="100"></GridViewColumn>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <!--</ScrollViewer>-->
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
+
+

@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MANAGER_DRINKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Beverage">
+          <Key>
+            <PropertyRef Name="Id_beverage" />
+          </Key>
+          <Property Name="Id_beverage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_beverage" Type="nvarchar" MaxLength="255" />
+          <Property Name="Typeofbeverage_id" Type="int" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Manufacturing_date" Type="datetime" Nullable="false" />
+          <Property Name="Expiry_date" Type="datetime" />
+          <Property Name="Date_in" Type="datetime" Nullable="false" />
+          <Property Name="Date_out" Type="date" />
+          <Property Name="Total_input" Type="int" />
+          <Property Name="Inventory" Type="int" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id_order" />
+          </Key>
+          <Property Name="Id_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_customer" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone_number" Type="char" MaxLength="20" />
+          <Property Name="Customer_balance" Type="float" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Order_status" Type="int" />
+          <Property Name="Order_date" Type="date" Nullable="false" />
+          <Property Name="User_id" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="Total_money" Type="float" />
+        </EntityType>
+        <EntityType Name="Order_Detail">
+          <Key>
+            <PropertyRef Name="Id_orderdetail" />
+          </Key>
+          <Property Name="Id_orderdetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Beverage_id" Type="int" />
+          <Property Name="Order_id" Type="int" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Num" Type="int" />
+          <Property Name="Total_money" Type="float" />
+          <Property Name="Note" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id_role" />
+          </Key>
+          <Property Name="Id_role" Type="int" Nullable="false" />
+          <Property Name="Name_role" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_status" />
+          </Key>
+          <Property Name="Id_status" Type="int" Nullable="false" />
+          <Property Name="Name_status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TypeOfBeverage">
+          <Key>
+            <PropertyRef Name="Id_TypeOfBeverage" />
+          </Key>
+          <Property Name="Id_TypeOfBeverage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_TypeOfBeverage" Type="nvarchar" MaxLength="255" />
+          <Property Name="Created_at" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_user" Type="nvarchar" MaxLength="255" />
+          <Property Name="Phone_number" Type="char" MaxLength="20" />
+          <Property Name="Email" Type="char" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="Role_id" Type="int" />
+          <Property Name="Created_at" Type="date" Nullable="false" />
+          <Property Name="Update_at" Type="date" />
+        </EntityType>
+        <Association Name="FK_BEVERAGE_TYPEOF">
+          <End Role="TypeOfBeverage" Type="Self.TypeOfBeverage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Beverage" Type="Self.Beverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfBeverage">
+              <PropertyRef Name="Id_TypeOfBeverage" />
+            </Principal>
+            <Dependent Role="Beverage">
+              <PropertyRef Name="Typeofbeverage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_ORDERSTATUS">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_status" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Order_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_BEVERAGE">
+          <End Role="Beverage" Type="Self.Beverage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beverage">
+              <PropertyRef Name="Id_beverage" />
+            </Principal>
+            <Dependent Role="Order_Detail">
+              <PropertyRef Name="Beverage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_ORDER">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id_order" />
+            </Principal>
+            <Dependent Role="Order_Detail">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id_role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MANAGER_DRINKModelStoreContainer">
+          <EntitySet Name="Beverage" EntityType="Self.Beverage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Detail" EntityType="Self.Order_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfBeverage" EntityType="Self.TypeOfBeverage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BEVERAGE_TYPEOF" Association="Self.FK_BEVERAGE_TYPEOF">
+            <End Role="TypeOfBeverage" EntitySet="TypeOfBeverage" />
+            <End Role="Beverage" EntitySet="Beverage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_ORDERSTATUS" Association="Self.FK_ORDER_ORDERSTATUS">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_USER" Association="Self.FK_ORDER_USER">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_BEVERAGE" Association="Self.FK_ORDERDETAIL_BEVERAGE">
+            <End Role="Beverage" EntitySet="Beverage" />
+            <End Role="Order_Detail" EntitySet="Order_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_ORDER" Association="Self.FK_ORDERDETAIL_ORDER">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_Detail" EntitySet="Order_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MANAGER_DRINKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Beverage">
+          <Key>
+            <PropertyRef Name="Id_beverage" />
+          </Key>
+          <Property Name="Id_beverage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_beverage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Typeofbeverage_id" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturing_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Expiry_date" Type="DateTime" Precision="3" />
+          <Property Name="Date_in" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Date_out" Type="DateTime" Precision="0" />
+          <Property Name="Total_input" Type="Int32" />
+          <Property Name="Inventory" Type="Int32" />
+          <NavigationProperty Name="TypeOfBeverage" Relationship="Self.FK_BEVERAGE_TYPEOF" FromRole="Beverage" ToRole="TypeOfBeverage" />
+          <NavigationProperty Name="Order_Detail" Relationship="Self.FK_ORDERDETAIL_BEVERAGE" FromRole="Beverage" ToRole="Order_Detail" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id_order" />
+          </Key>
+          <Property Name="Id_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_customer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_number" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Customer_balance" Type="Double" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Order_status" Type="Int32" />
+          <Property Name="Order_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="User_id" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Total_money" Type="Double" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_ORDER_ORDERSTATUS" FromRole="Order" ToRole="Status" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ORDER_USER" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Order_Detail" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="Order" ToRole="Order_Detail" />
+        </EntityType>
+        <EntityType Name="Order_Detail">
+          <Key>
+            <PropertyRef Name="Id_orderdetail" />
+          </Key>
+          <Property Name="Id_orderdetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Beverage_id" Type="Int32" />
+          <Property Name="Order_id" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Num" Type="Int32" />
+          <Property Name="Total_money" Type="Double" />
+          <Property Name="Note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Beverage" Relationship="Self.FK_ORDERDETAIL_BEVERAGE" FromRole="Order_Detail" ToRole="Beverage" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ORDERDETAIL_ORDER" FromRole="Order_Detail" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id_role" />
+          </Key>
+          <Property Name="Id_role" Type="Int32" Nullable="false" />
+          <Property Name="Name_role" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_USER_ROLE" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_status" />
+          </Key>
+          <Property Name="Id_status" Type="Int32" Nullable="false" />
+          <Property Name="Name_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_ORDERSTATUS" FromRole="Status" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="TypeOfBeverage">
+          <Key>
+            <PropertyRef Name="Id_TypeOfBeverage" />
+          </Key>
+          <Property Name="Id_TypeOfBeverage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_TypeOfBeverage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Created_at" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Beverages" Relationship="Self.FK_BEVERAGE_TYPEOF" FromRole="TypeOfBeverage" ToRole="Beverage" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_user" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_number" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Role_id" Type="Int32" />
+          <Property Name="Created_at" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Update_at" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_ORDER_USER" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_USER_ROLE" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_BEVERAGE_TYPEOF">
+          <End Role="TypeOfBeverage" Type="Self.TypeOfBeverage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Beverage" Type="Self.Beverage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfBeverage">
+              <PropertyRef Name="Id_TypeOfBeverage" />
+            </Principal>
+            <Dependent Role="Beverage">
+              <PropertyRef Name="Typeofbeverage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_BEVERAGE">
+          <End Role="Beverage" Type="Self.Beverage" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beverage">
+              <PropertyRef Name="Id_beverage" />
+            </Principal>
+            <Dependent Role="Order_Detail">
+              <PropertyRef Name="Beverage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_ORDERSTATUS">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_status" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Order_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_USER">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDETAIL_ORDER">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id_order" />
+            </Principal>
+            <Dependent Role="Order_Detail">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id_role" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MANAGER_DRINKEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Beverages" EntityType="Self.Beverage" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Order_Detail" EntityType="Self.Order_Detail" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="TypeOfBeverages" EntityType="Self.TypeOfBeverage" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_BEVERAGE_TYPEOF" Association="Self.FK_BEVERAGE_TYPEOF">
+            <End Role="TypeOfBeverage" EntitySet="TypeOfBeverages" />
+            <End Role="Beverage" EntitySet="Beverages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_BEVERAGE" Association="Self.FK_ORDERDETAIL_BEVERAGE">
+            <End Role="Beverage" EntitySet="Beverages" />
+            <End Role="Order_Detail" EntitySet="Order_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_ORDERSTATUS" Association="Self.FK_ORDER_ORDERSTATUS">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_USER" Association="Self.FK_ORDER_USER">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDETAIL_ORDER" Association="Self.FK_ORDERDETAIL_ORDER">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Detail" EntitySet="Order_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MANAGER_DRINKModelStoreContainer" CdmEntityContainer="MANAGER_DRINKEntities1">
+          <EntitySetMapping Name="Beverages">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.Beverage">
+              <MappingFragment StoreEntitySet="Beverage">
+                <ScalarProperty Name="Id_beverage" ColumnName="Id_beverage" />
+                <ScalarProperty Name="Name_beverage" ColumnName="Name_beverage" />
+                <ScalarProperty Name="Typeofbeverage_id" ColumnName="Typeofbeverage_id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Manufacturing_date" ColumnName="Manufacturing_date" />
+                <ScalarProperty Name="Expiry_date" ColumnName="Expiry_date" />
+                <ScalarProperty Name="Date_in" ColumnName="Date_in" />
+                <ScalarProperty Name="Date_out" ColumnName="Date_out" />
+                <ScalarProperty Name="Total_input" ColumnName="Total_input" />
+                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id_order" ColumnName="Id_order" />
+                <ScalarProperty Name="Name_customer" ColumnName="Name_customer" />
+                <ScalarProperty Name="Phone_number" ColumnName="Phone_number" />
+                <ScalarProperty Name="Customer_balance" ColumnName="Customer_balance" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Order_status" ColumnName="Order_status" />
+                <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Total_money" ColumnName="Total_money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Detail">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.Order_Detail">
+              <MappingFragment StoreEntitySet="Order_Detail">
+                <ScalarProperty Name="Id_orderdetail" ColumnName="Id_orderdetail" />
+                <ScalarProperty Name="Beverage_id" ColumnName="Beverage_id" />
+                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="Total_money" ColumnName="Total_money" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id_role" ColumnName="Id_role" />
+                <ScalarProperty Name="Name_role" ColumnName="Name_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+                <ScalarProperty Name="Name_status" ColumnName="Name_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfBeverages">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.TypeOfBeverage">
+              <MappingFragment StoreEntitySet="TypeOfBeverage">
+                <ScalarProperty Name="Id_TypeOfBeverage" ColumnName="Id_TypeOfBeverage" />
+                <ScalarProperty Name="Name_TypeOfBeverage" ColumnName="Name_TypeOfBeverage" />
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MANAGER_DRINKModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Name_user" ColumnName="Name_user" />
+                <ScalarProperty Name="Phone_number" ColumnName="Phone_number" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="Created_at" ColumnName="Created_at" />
+                <ScalarProperty Name="Update_at" ColumnName="Update_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
